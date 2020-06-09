@@ -74,3 +74,26 @@ hierbaDelDiablo raton = raton {peso = max 0 (peso raton - 0.1), enfermedades = e
 
 enfermedadesConMasDe10Letras :: Raton -> [Enfermedad]
 enfermedadesConMasDe10Letras raton = filter ((>10).length) (enfermedades raton)
+
+
+-- Punto 3)
+
+type Medicamento = [Hierba]
+
+pondsAntiAge :: Medicamento
+pondsAntiAge = [alcachofa,hierbaBuena,hierbaBuena,hierbaBuena]
+
+reduceFatFast ::Int -> Medicamento
+reduceFatFast potencia = [hierbaVerde "Obesisdad"] ++ take potencia (repeat alcachofa)
+
+
+armarPdepCilina :: [String] -> Medicamento
+armarPdepCilina [] = []
+armarPdepCilina (cabeza : cola) = [hierbaVerde cabeza] ++ armarPdepCilina cola
+
+pdepCilina :: Medicamento
+pdepCilina = armarPdepCilina sufijosInfecciosas
+
+sufijosInfecciosas :: [String]
+sufijosInfecciosas = [ "sis", "itis", "emia", "cocos"]
+
