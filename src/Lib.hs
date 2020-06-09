@@ -97,3 +97,29 @@ pdepCilina = armarPdepCilina sufijosInfecciosas
 sufijosInfecciosas :: [String]
 sufijosInfecciosas = [ "sis", "itis", "emia", "cocos"]
 
+-- Punto 4)
+
+cantidadIdeal :: (Num a, Enum a) => (a -> Bool) -> a
+cantidadIdeal condicion = head (filter condicion [1..])
+
+tieneSobrePeso :: Raton -> Bool
+tieneSobrePeso = (>1).peso
+
+masDe3Enfermedades :: Raton -> Bool
+masDe3Enfermedades = (>3).length.enfermedades
+
+
+lograEstabilizar :: Medicamento -> [Raton] -> Bool
+lograEstabilizar medicamento ratones = all ratonEstabilizado (aplicarMedicamentoAPoblacion medicamento ratones)
+
+ratonEstabilizado :: Raton -> Bool
+ratonEstabilizado raton = (not.tieneSobrePeso) raton && masDe3Enfermedades raton
+
+aplicarMedicamentoAPoblacion :: Medicamento -> [Raton] -> [Raton]
+aplicarMedicamentoAPoblacion medicamento  = map (aplicarMedicamento medicamento)
+
+aplicarMedicamento :: Medicamento -> Raton -> Raton
+aplicarMedicamento medicamento raton = foldl aplicarHierba raton medicamento
+
+aplicarHierba :: Raton -> Hierba -> Raton
+aplicarHierba raton hierba = hierba raton
