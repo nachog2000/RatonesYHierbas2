@@ -37,3 +37,40 @@ huesudo = UnRaton {
     peso = 10,
     enfermedades = ["alta obesidad", "sinusitis"]
 }
+
+
+-- Punto 2)
+
+type Hierba = Raton -> Raton
+
+hierbaBuena :: Hierba
+hierbaBuena raton = raton {edad = edad raton - rejuvenecerRaton ((sqrt.edad) raton) raton}
+
+rejuvenecerRaton :: Float -> Raton -> Float
+rejuvenecerRaton años raton = edad raton - años
+
+hierbaVerde :: String -> Hierba
+hierbaVerde terminacion raton = raton {enfermedades = filter (noTerminaCon terminacion) (enfermedades raton)}
+
+noTerminaCon :: String -> String -> Bool
+noTerminaCon terminacion enfermedad = terminacion /= drop (length enfermedad - length terminacion) enfermedad
+
+alcachofa :: Hierba
+alcachofa raton = raton {peso = peso raton - (peso raton) * perderPesoPorcentual raton}
+
+perderPesoPorcentual :: Raton -> Float
+perderPesoPorcentual raton | peso raton > 2 = 0.10
+                           | otherwise = 0.05
+
+hierbaZort :: Hierba
+hierbaZort raton = raton {
+    nombre = "Pinky",
+    edad = 0,
+    enfermedades = []
+}
+
+hierbaDelDiablo :: Hierba
+hierbaDelDiablo raton = raton {peso = max 0 (peso raton - 0.1), enfermedades = enfermedadesConMasDe10Letras raton}
+
+enfermedadesConMasDe10Letras :: Raton -> [Enfermedad]
+enfermedadesConMasDe10Letras raton = filter ((>10).length) (enfermedades raton)
